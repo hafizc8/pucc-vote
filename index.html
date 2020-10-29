@@ -1,0 +1,86 @@
+<!-- CLIENT -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>IO Chat</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="card" style="width: 18rem;">
+                    <h5 class="card-title">Paslon 1 (Jumlah Suara <p id="suara-1">0</p>)</h5>
+                    <img src="/image/g1.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <p class="card-text">No Name ( Ketua Umum) <br /> No Name ( Wakil Ketua Umum) </p>
+                        <button type="button" class="btn btn-dark">VIsi & Misi</button>
+                        <button type="button" class="btn btn-success button-vote" data-dt="1">Voting</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card" style="width: 18rem;">
+                    <h5 class="card-title">Paslon 2 (Jumlah Suara <p id="suara-2">0</p>)</h5>
+                    <img src="/image/g1.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <p class="card-text">No Name ( Ketua Umum) <br /> No Name ( Wakil Ketua Umum) </p>
+                        <button type="button" class="btn btn-dark">VIsi & Misi</button>
+                        <button type="button" class="btn btn-success button-vote" data-dt="2">Voting</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card" style="width: 18rem;">
+                    <h5 class="card-title">Paslon 3 (Jumlah Suara <p id="suara-3">0</p>)</h5>
+                    <img src="/image/g1.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <p class="card-text">No Name ( Ketua Umum) <br /> No Name ( Wakil Ketua Umum) </p>
+                        <button type="button" class="btn btn-dark">VIsi & Misi</button>
+                        <button type="button" class="btn btn-success button-vote" data-dt="3">Voting</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        $(function() {
+            var socket = io.connect();
+
+            // event button vote
+            $('.button-vote').on('click', function() {
+                var psln = $(this).attr('data-dt');
+                console.log("anda menekan vote: " + psln);
+                socket.emit('sdvote', psln);
+            });
+
+            // terima brodcast dri client
+            socket.on('new-record', function(data) {
+                console.log("data baru : " + data);
+                var currentSuara = parseInt($('#suara-'+data).text());
+                console.log("data current: "+currentSuara);
+                toastr.info('Seseorang baru saja melakukan voting..!');
+                $('#suara-'+data).text(currentSuara+1);
+            });
+
+            // listen initial data dari server
+            socket.on('initial-data', function(data) {
+                $.each(data, function(i, item) {
+                    $('#suara-'+item.no_paslon).text(item.jumlah);
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
