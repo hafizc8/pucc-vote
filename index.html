@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>IO Chat</title>
+    <title></title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
@@ -12,46 +12,136 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 </head>
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-4">
-                <div class="card" style="width: 18rem;">
-                    <h5 class="card-title">Paslon 1 (Jumlah Suara <p id="suara-1">0</p>)</h5>
-                    <img src="/image/g1.png" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <p class="card-text">No Name ( Ketua Umum) <br /> No Name ( Wakil Ketua Umum) </p>
-                        <button type="button" class="btn btn-dark">VIsi & Misi</button>
-                        <button type="button" class="btn btn-success button-vote" data-dt="1">Voting</button>
+
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+              <a class="navbar-brand" href="#">Calon Pengurus</a>
+              <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item active">
+                  <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Bagan</a>
+                </li>
+              </ul>
+              <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+              </form>
+            </div>
+          </nav>
+    </header>
+    
+    <main>
+        <!-- Calon- Ketum-Waketum -->
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="card mb-3">
+                        <h5 class="card-header">Paslon 1 (Jumlah Suara <spam id="suara-1">0</spam>)</h5>
+                        <img src="/image/g1.png" class="img-fluid card-img-top">
+                        <div class="card-body">
+                            <p class="card-text">No Name ( Ketua Umum) <br /> No Name ( Wakil Ketua Umum) </p>
+                            <button type="button" class="btn btn-dark">VIsi & Misi</button>
+                            <button type="button" class="btn btn-success button-vote" data-dt="1">Voting</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="card mb-3">
+                        <h5 class="card-header">Paslon 2 (Jumlah Suara <spam id="suara-2">0</spam>)</h5>
+                        <img src="/image/g1.png" class="img-fluid card-img-top">
+                        <div class="card-body">
+                            <p class="card-text">No Name ( Ketua Umum) <br /> No Name ( Wakil Ketua Umum) </p>
+                            <button type="button" class="btn btn-dark">VIsi & Misi</button>
+                            <button type="button" class="btn btn-success button-vote" data-dt="2">Voting</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card mb-3">
+                        <h5 class="card-header">Paslon 3 (Jumlah Suara <spam id="suara-3">0</spam>)</h5>
+                        <img src="/image/g1.png" class="img-fluid card-img-top">
+                        <div class="card-body">
+                            <p class="card-text">No Name ( Ketua Umum) <br /> No Name ( Wakil Ketua Umum) </p>
+                            <button type="button" class="btn btn-dark">VIsi & Misi</button>
+                            <button type="button" class="btn btn-success button-vote" data-dt="3">Voting</button>
+                        </div>
+                    </div>
+                </div>
+            </div><br/>
+
+            <!-- ##### -->
+            <div class="row mb-4">
+                <div class="col-lg-4">
+                    <div class="card text-white bg-info mb-3">
+                        <div class="card-header">Total Anggota Yang Telah Hadir</div>
+                        <div class="card-body">
+                        <h5 class="card-title text-center">0 Anggota</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card text-white bg-success mb-3" >
+                        <div class="card-header" >Total Anggota Yang Sudah Voting</div>
+                        <div class="card-body">
+                        <h5 class="card-title text-center">0 Anggota</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card text-white bg-secondary mb-3">
+                        <div class="card-header">Anggota Yang Belum Voting</div>
+                        <div class="card-body">
+                        <h5 class="card-title text-center">0 Anggota</h5>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="col-lg-4">
-                <div class="card" style="width: 18rem;">
-                    <h5 class="card-title">Paslon 2 (Jumlah Suara <p id="suara-2">0</p>)</h5>
-                    <img src="/image/g1.png" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <p class="card-text">No Name ( Ketua Umum) <br /> No Name ( Wakil Ketua Umum) </p>
-                        <button type="button" class="btn btn-dark">VIsi & Misi</button>
-                        <button type="button" class="btn btn-success button-vote" data-dt="2">Voting</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-4">
-                <div class="card" style="width: 18rem;">
-                    <h5 class="card-title">Paslon 3 (Jumlah Suara <p id="suara-3">0</p>)</h5>
-                    <img src="/image/g1.png" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <p class="card-text">No Name ( Ketua Umum) <br /> No Name ( Wakil Ketua Umum) </p>
-                        <button type="button" class="btn btn-dark">VIsi & Misi</button>
-                        <button type="button" class="btn btn-success button-vote" data-dt="3">Voting</button>
+            <div class="row mb-5">
+                <div class="col-lg-12">
+                    <div class="list-group">
+                        <a href="#" class="list-group-item list-group-item-action active">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">Masukan Dan Saran </h5>
+                            </div>
+                            </a>
+                        <a href="#" class="list-group-item list-group-item-action ">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">No Name</h5>
+                            <small>3 days ago</small>
+                        </div>
+                        <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">No Name</h5>
+                            <small class="text-muted">3 days ago</small>
+                        </div>
+                        <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">No Name</h5>
+                            <small class="text-muted">3 days ago</small>
+                        </div>
+                        <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
+    </main>   
 
-    </div>
+    <footer>
+        <a href="#" class="list-group-item list-group-item-action list-group-item-dark">&copy; #######</a>
+    </footer>
 
     <script>
         $(function() {
@@ -81,6 +171,5 @@
             });
         });
     </script>
-
 </body>
 </html>
