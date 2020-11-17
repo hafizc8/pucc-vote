@@ -31,21 +31,22 @@ io.sockets.on('connection', function(socket) {
 
     // pada saat awal connect, ambil data dari database
     con.connect(function(err) {
-        var resultJson;
-
-        // ambil data vote
-        con.query("SELECT * FROM vote", function (err, result, fields) {
-            resultJson.push(result);
-        });
+        // exports.getInitialData = async function(req, res) {
+        //     let resultJson = [];
+        //     let dataVote = await getDataVote();
+        //     console.log(dataVote);
         
-        // show stat total anggota
-        con.query("SELECT COUNT(*) FROM ms_anggota", function (err, result, fields) {
-            // lempar data ke client
-            resultJson.push() = 0;
-        });
+        //     let query = 'SELECT COUNT(*) FROM ms_anggota';
+        //     con.query(query, function (error, rows, fields){
+        //         // return response.ok(rows, res);
+        //         resultJson['data_vote'] = dataVote;
+        //         resultJson['stat_anggota'] = rows;
+        //         return resultJson;
+        //     });
+        // };
         
-        // lempar data ke client
-        io.sockets.emit('initial-data', result);
+        // // lempar data ke client
+        // io.sockets.emit('initial-data', resultJson);
     });
 
     // bila disconnect
@@ -69,4 +70,13 @@ io.sockets.on('connection', function(socket) {
         // broadcast ke semua client
         io.sockets.emit('new-record', data);
     });
+
+    function getDataVote(){
+        return new Promise(resolve => {
+            let query = 'SELECT * FROM vote';
+            con.query(query, function (err, result, fields){
+                resolve(result);
+            });
+        });
+    }
 });
