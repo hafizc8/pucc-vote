@@ -6,8 +6,8 @@ var mysql = require('mysql');
 var con = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "",
-    // port: 8889,
+    password: "root",
+    port: 8889,
     database: "dbvote"
 });
 
@@ -31,13 +31,21 @@ io.sockets.on('connection', function(socket) {
 
     // pada saat awal connect, ambil data dari database
     con.connect(function(err) {
-        // if (err) throw err;
+        var resultJson;
+
+        // ambil data vote
         con.query("SELECT * FROM vote", function (err, result, fields) {
-            // if (err) throw err;
-            console.log(result);
-            // lempar data ke client
-            io.sockets.emit('initial-data', result);
+            resultJson.push(result);
         });
+        
+        // show stat total anggota
+        con.query("SELECT COUNT(*) FROM ms_anggota", function (err, result, fields) {
+            // lempar data ke client
+            resultJson.push() = 0;
+        });
+        
+        // lempar data ke client
+        io.sockets.emit('initial-data', result);
     });
 
     // bila disconnect
