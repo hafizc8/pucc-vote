@@ -11,7 +11,7 @@ var con = mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "root",
-    port: 8889,
+    port: 3306,
     database: "dbvote"
 });
 
@@ -61,7 +61,8 @@ app.get('/', function(req, res) {
 
             // on vote
             socket.on('sdvote', function(data, fn) {
-                console.log("data masuk..");
+                // console.log("data masuk..");
+                console.log(data)
                 // masukkan data ke database
                 // con.connect(function(err) {
                     // cek dulu apakah user sudah vote
