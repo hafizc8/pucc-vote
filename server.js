@@ -71,17 +71,18 @@ app.get('/', function(req, res) {
                         if (result[0].checkvt == 0) {
                             con.query("UPDATE vote SET jumlah = jumlah + 1 WHERE no_paslon = ?", [data.vote], function (err, result) {
                                 console.log("Melakukan proses pemilihan (50%)...");
+
+                                con.query("INSERT INTO vote_transaction VALUES (?, ?, ?, now())", [username, data.vote, data.masukansaran], function (err, result) {
+                                    console.log("Melakukan proses pemilihan (100%)...");
+
+                                    // broadcast ke semua client
+                                    io.sockets.emit('new-record', data);
+                                });
                             });
     
-                            con.query("INSERT INTO vote_transaction VALUES (?, ?, ?, now())", [username, data.vote, data.masukansaran], function (err, result) {
-                                console.log("Melakukan proses pemilihan (100%)...");
-                            });
                         }
                     });
                 // });
-
-                // broadcast ke semua client
-                io.sockets.emit('new-record', data);
 
                 fn(true);
             });
