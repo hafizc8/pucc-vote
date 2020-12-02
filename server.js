@@ -11,7 +11,7 @@ var con = mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "root",
-    port: 3306,
+    port: 8889,
     database: "dbvote"
 });
 
@@ -93,6 +93,11 @@ app.get('/', function(req, res) {
 	}
 });
 
+app.get('/error', function(request, response) {
+    response.sendFile(__dirname + '/login-failed.html');
+    // response.end();
+});
+
 // fungsi memanggil data vote
 function getDataVote(){
     return new Promise(resolve => {
@@ -158,20 +163,23 @@ app.post('/auth', function(request, response) {
                     request.session.loggedin = true;
                     request.session.username = username;
                     response.redirect('/');
+                    response.end();
                 } else {
                     // password salah
-                    response.send('Password salah!');
+                    // response.send('password salah');
+                    response.redirect('/error');
                     response.end();
                 }
 			} else {
                 // user tidak ditemukan
-				response.send('Username tidak ditemukan!');
+                // response.send('user tidak ada');
+                response.redirect('/error');
                 response.end();
-			}			
-			response.end();
+			}
 		});
 	} else {
-		response.send('Please enter Username and Password!');
-		response.end();
+        // response.send('username atau password kosong');
+        response.redirect('/error');
+        response.end();
 	}
 });
