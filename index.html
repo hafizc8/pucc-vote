@@ -3,11 +3,24 @@
 <html lang="en">
 
 <head>
-    <title></title>
+    <title>PUCC Vote</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="/css/style.css">
+    <!-- <link rel="stylesheet" href="/css/style.css"> -->
     <script src="/socket.io/socket.io.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <title>PUCC Vote | Beranda</title>
+    <style>
+        .card-img-top {
+            width: 100%;
+            height: 22vw;
+            object-fit: cover;
+        }
+
+        .scroll {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+    </style>
 </head>
 
 <body>
@@ -32,19 +45,19 @@
         </nav>
     </header>
 
-    <main>
+    <!-- <main> -->
         <!-- Calon- Ketum-Waketum -->
-        <div class="container mt-5">
-            <div class="row">
-                <div class="col-lg-12">
+        <div class="container">
+            <div class="row mt-4">
+                <div class="col-12">
                     <h3 class="mb-4">Pemilihan Kepengurusan Baru PUCC 2021</h3>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="card mb-3">
+            <div class="row mb-4">
+                <div class="col">
+                    <div class="card mb-3" style="height: 100%;">
                         <h5 class="card-header bg-dark text-white">Kandidat 1</h5>
-                        <img src="/image/g1.png" class="img-fluid card-img-top">
+                        <img src="/image/paslon1.jpg" class="img-fluid card-img-top">
                         <div class="card-body">
                             <p class="text-center">Jumlah Suara</p>
                             <h1 id="suara-1" class="text-center">0</h1>
@@ -55,10 +68,10 @@
                     </div>
                 </div>
 
-                <div class="col-lg-6">
-                    <div class="card mb-3">
+                <div class="col">
+                    <div class="card mb-3" style="height: 100%;">
                         <h5 class="card-header bg-dark text-white">Kandidat 2</h5>
-                        <img src="/image/g1.png" class="img-fluid card-img-top">
+                        <img src="/image/paslon2.jpg" class="img-fluid card-img-top">
                         <div class="card-body">
                             <p class="text-center">Jumlah Suara</p>
                             <h1 id="suara-2" class="text-center">0</h1>
@@ -68,29 +81,29 @@
                         </div>
                     </div>
                 </div>
-            </div><br />
+            </div>
 
             <!-- ##### -->
-            <div class="row mb-4">
-                <div class="col-lg-4">
-                    <div class="card text-white bg-info mb-3">
-                        <div class="card-header">Total Anggota</div>
+            <div class="row mb-3">
+                <div class="col-4">
+                    <div class="card mb-3">
+                        <div class="card-header text-white bg-dark">Total Anggota</div>
                         <div class="card-body">
                             <h5 class="card-title text-center"><b id="total_anggota">0</b> Anggota</h5>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <div class="card text-white bg-success mb-3">
-                        <div class="card-header">Total Anggota Yang Sudah Vote</div>
+                <div class="col-4">
+                    <div class="card mb-3">
+                        <div class="card-header text-white bg-dark">Total Anggota Yang Sudah Vote</div>
                         <div class="card-body">
                             <h5 class="card-title text-center"><b id="anggota_voted">0</b> Anggota</h5>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <div class="card text-white bg-secondary mb-3">
-                        <div class="card-header">Anggota Yang Belum Vote</div>
+                <div class="col-4">
+                    <div class="card mb-3">
+                        <div class="card-header text-white bg-dark">Anggota Yang Belum Vote</div>
                         <div class="card-body">
                             <h5 class="card-title text-center"><b id="anggota_voted">0</b> Anggota</h5>
                         </div>
@@ -99,42 +112,40 @@
             </div>
 
             <div class="row mb-5">
-                <div class="col-lg-12">
-                    <div class="list-group">
-                        <a href="#" class="list-group-item list-group-item-action active bg-dark">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h5 class="mb-1">Masukan Dan Saran </h5>
+                <div class="col-12">
+                    <div class="card mb-3">
+                        <div class="card-header text-white bg-dark">Masukan dan Saran</div>
+                        <div class="card-body p-0 scroll">
+                            <div class="list-group ">
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1">Surya</h5>
+                                        <small>3 days ago</small>
+                                    </div>
+                                    <small>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ea magnam in labore ratione provident autem accusamus perspiciatis quis excepturi quas esse accusantium, quibusdam adipisci eligendi.</small>
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1">Ahmad</h5>
+                                        <small class="text-muted">3 days ago</small>
+                                    </div>
+                                    <small>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde quibusdam obcaecati fugiat nihil! Minima voluptatem, delectus quas earum consequuntur quibusdam?</small>
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1">Sugiono</h5>
+                                        <small class="text-muted">3 days ago</small>
+                                    </div>
+                                    <small>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum repellendus quos necessitatibus numquam assumenda cupiditate sequi adipisci vero dolorum quo. Quo laboriosam veritatis ipsa nam.</small>
+                                </a>
                             </div>
-                        </a>
-                        <a href="#" class="list-group-item list-group-item-action ">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h5 class="mb-1">No Name</h5>
-                                <small>3 days ago</small>
-                            </div>
-                            <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget
-                                risus varius blandit.</p>
-                        </a>
-                        <a href="#" class="list-group-item list-group-item-action">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h5 class="mb-1">No Name</h5>
-                                <small class="text-muted">3 days ago</small>
-                            </div>
-                            <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget
-                                risus varius blandit.</p>
-                        </a>
-                        <a href="#" class="list-group-item list-group-item-action">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h5 class="mb-1">No Name</h5>
-                                <small class="text-muted">3 days ago</small>
-                            </div>
-                            <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget
-                                risus varius blandit.</p>
-                        </a>
+                        </div>
                     </div>
                 </div>
             </div>
+            
         </div>
-    </main>
+    <!-- </main> -->
 
     <!-- Modal -->
     <div class="modal fade" id="voteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -183,7 +194,6 @@
         function changeAttributeVote(number) {
             $('#send').attr('data-vote', number);
             $('#notifikasii').text("Anda akan memilih pasangan calon nomor " + number +" ..");
-            toastr.success('tes toast');
         }
 
         // send to server
@@ -194,6 +204,7 @@
             };
 
             socket.emit('sdvote', data, function(result) {
+                console.log(result);
                 if (result) {
                     toastr.success('Anda berhasil melakukan vote!');
                 } else {
