@@ -184,3 +184,11 @@ app.post('/auth', function(request, response) {
         response.end();
 	}
 });
+
+
+/**
+ * Task yg belum:
+ * 1. Handle nilai total anggota sudah vote (on load & on listen data)
+ * 2. Handle nilai total anggota belum vote (on load & on listen data)
+ * 3. List masukan dan saran dibuatkan live (on load & on listen data)
+ */
