@@ -105,7 +105,7 @@
                     <div class="card mb-3">
                         <div class="card-header text-white bg-dark">Anggota Yang Belum Vote</div>
                         <div class="card-body">
-                            <h5 class="card-title text-center"><b id="anggota_voted">0</b> Anggota</h5>
+                            <h5 class="card-title text-center"><b id="anggota_not_voted">0</b> Anggota</h5>
                         </div>
                     </div>
                 </div>
@@ -116,28 +116,8 @@
                     <div class="card mb-3">
                         <div class="card-header text-white bg-dark">Masukan dan Saran</div>
                         <div class="card-body p-0 scroll">
-                            <div class="list-group ">
-                                <a href="#" class="list-group-item list-group-item-action">
-                                    <div class="d-flex w-100 justify-content-between">
-                                        <h5 class="mb-1">Surya</h5>
-                                        <small>3 days ago</small>
-                                    </div>
-                                    <small>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ea magnam in labore ratione provident autem accusamus perspiciatis quis excepturi quas esse accusantium, quibusdam adipisci eligendi.</small>
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-action">
-                                    <div class="d-flex w-100 justify-content-between">
-                                        <h5 class="mb-1">Ahmad</h5>
-                                        <small class="text-muted">3 days ago</small>
-                                    </div>
-                                    <small>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde quibusdam obcaecati fugiat nihil! Minima voluptatem, delectus quas earum consequuntur quibusdam?</small>
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-action">
-                                    <div class="d-flex w-100 justify-content-between">
-                                        <h5 class="mb-1">Sugiono</h5>
-                                        <small class="text-muted">3 days ago</small>
-                                    </div>
-                                    <small>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum repellendus quos necessitatibus numquam assumenda cupiditate sequi adipisci vero dolorum quo. Quo laboriosam veritatis ipsa nam.</small>
-                                </a>
+                            <div class="list-group" id="masukanSaranPanel">
+                                
                             </div>
                         </div>
                     </div>
@@ -186,6 +166,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script src="/js/script.js"></script>
 
     <script>
         var socket = io.connect();
@@ -218,11 +199,31 @@
 
         // terima brodcast dri client
         socket.on('new-record', function (data) {
-            console.log("data baru : " + data);
-            let currentSuara = parseInt(document.getElementById('suara-' + data.vote).innerHTML);
-            console.log("data current: " + currentSuara);
+            // console.log("data baru : " + data);
+
+            let currentSuara = parseInt($('#suara-'+data.vote).text());
+            // console.log("data current: " + currentSuara);
+
             toastr.info('Seseorang baru saja melakukan vote..!');
-            document.getElementById('suara-' + data.vote).innerHTML = currentSuara + 1;
+            $('#suara-'+data.vote).text(currentSuara + 1);
+
+            // update statistik
+            let totalAnggota = parseInt($('#total_anggota').text());
+            let anggotaVoted = parseInt($('#anggota_voted').text());
+            $('#anggota_voted').text(anggotaVoted + 1);
+            $('#anggota_not_voted').text(totalAnggota - anggotaVoted);
+
+            // update masukan dan saran
+            let html = `
+                <a href="#" class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">`+data.nama+`</h5>
+                        <small>`+data.tglVoted+`</small>
+                    </div>
+                    <small>`+data.masukansaran+`</small>
+                </a>
+            `;
+            $('#masukanSaranPanel').append(html);
         });
 
         // listen initial data dari server
@@ -231,10 +232,26 @@
                 $('#suara-' + item.no_paslon).text(item.jumlah);
             });
 
-            document.getElementById('total_anggota').innerHTML = data.stat_anggota[0].count;
-            document.getElementById('anggota_voted').innerHTML = data.anggota_voted[0].count;
+            $('#total_anggota').text(data.stat_anggota[0].count);
+            $('#anggota_voted').text(data.anggota_voted[0].count);
+            $('#anggota_not_voted').text(data.stat_anggota[0].count - data.anggota_voted[0].count);
 
             $('.btnvote').attr('disabled', data.has_voted);
+
+            $('#masukanSaranPanel').html('');
+            let html = ``;
+            $.each(data.masukan_saran, function(i, item) {
+                html = html + `
+                    <a href="#" class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">`+item.nama+`</h5>
+                            <small>`+getTanggalIndo(item.tgl_aksi)+`</small>
+                        </div>
+                        <small>`+item.masukan+`</small>
+                    </a>
+                `;
+            });
+            $('#masukanSaranPanel').append(html);
         });
 
         $('#voteModal').on('shown.bs.modal', function () {
