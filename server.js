@@ -30,6 +30,8 @@ connections = [];
 server.listen(3000);
 console.log("Server is running..");
 
+process.setMaxListeners(0);
+
 // routing index
 app.get('/', function(req, res) {
     if (req.session.loggedin) {
@@ -101,6 +103,12 @@ app.get('/', function(req, res) {
 
 app.get('/error', function(request, response) {
     response.sendFile(__dirname + '/login-failed.html');
+    // response.end();
+});
+
+app.get('/logout', function(request, response) {
+    request.session.destroy();
+    response.redirect('/');
     // response.end();
 });
 

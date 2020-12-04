@@ -41,6 +41,7 @@
                         <a class="nav-link" href="#">Bagan</a>
                     </li>
                 </ul>
+                <a href="/logout" class="text-white">Logout</a>
             </div>
         </nav>
     </header>
@@ -52,6 +53,17 @@
                 <div class="col-12">
                     <h3 class="mb-4">Pemilihan Kepengurusan Baru PUCC 2021</h3>
                 </div>
+                <div class="col-12">
+                    <div class="alert alert-info" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="alert-heading">Selamat Datang, !</h4>
+                        <p>Website PUCC Vote ini menampilkan data secara realtime..</p>
+                        <hr>
+                        <p class="mb-0">Silahkan tekan tombol "Vote" disalah satu kandidat untuk memberikan voting.</p>
+                    </div>
+                </div>
             </div>
             <div class="row mb-4">
                 <div class="col">
@@ -62,7 +74,7 @@
                             <p class="text-center">Jumlah Suara</p>
                             <h1 id="suara-1" class="text-center">0</h1>
                             <p class="card-text">No Name ( Ketua Umum) <br /> No Name ( Wakil Ketua Umum) </p>
-                            <button type="button" class="btn btn-dark">VIsi & Misi</button>
+                            <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#visiMisi1">Visi & Misi</button>
                             <button type="button" class="btn btn-success btnvote" onclick="changeAttributeVote(1)" data-toggle="modal" data-target="#voteModal">Vote</button>
                         </div>
                     </div>
@@ -76,7 +88,7 @@
                             <p class="text-center">Jumlah Suara</p>
                             <h1 id="suara-2" class="text-center">0</h1>
                             <p class="card-text">No Name ( Ketua Umum) <br /> No Name ( Wakil Ketua Umum) </p>
-                            <button type="button" class="btn btn-dark">VIsi & Misi</button>
+                            <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#visiMisi2">Visi & Misi</button>
                             <button type="button" class="btn btn-success btnvote" onclick="changeAttributeVote(2)" data-toggle="modal" data-target="#voteModal">Vote</button>
                         </div>
                     </div>
@@ -154,6 +166,66 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" data-vote="0" id="send">Vote!</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Visi Misi 1 -->
+    <div class="modal fade" id="visiMisi1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="exampleModalLabel">Visi Misi Kandidat 1</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Visi
+                    <ul>
+                        <li>1. Memajukan rakyat indonesia..</li>
+                        <li>2. Memajukan rakyat indonesia..</li>
+                    </ul>
+
+                    Misi
+                    <ul>
+                        <li>1. Memajukan rakyat indonesia..</li>
+                        <li>2. Memajukan rakyat indonesia..</li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Visi Misi 2 -->
+    <div class="modal fade" id="visiMisi2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="exampleModalLabel">Visi Misi Kandidat 2</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Visi
+                    <ul>
+                        <li>1. Memajukan rakyat indonesia..</li>
+                        <li>2. Memajukan rakyat indonesia..</li>
+                    </ul>
+
+                    Misi
+                    <ul>
+                        <li>1. Memajukan rakyat indonesia..</li>
+                        <li>2. Memajukan rakyat indonesia..</li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
