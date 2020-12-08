@@ -15,12 +15,13 @@ var con = mysql.createConnection({
     database: "dbvote"
 });
 
+var sessionMiddleware = session({secret: 'pucc secret'});
+
 app.use(express.static(__dirname+'/public'));
-app.use(session({
-	secret: 'secret',
-	resave: true,
-	saveUninitialized: true
-}));
+io.use(function (socket, next) {
+    sessionMiddleware(socket.request, socket.request.res, next);
+});
+app.use(sessionMiddleware);
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json());
 
@@ -35,70 +36,77 @@ process.setMaxListeners(0);
 // routing index
 app.get('/', function(req, res) {
     if (req.session.loggedin) {
-        let username = req.session.username;
-        let nama = req.session.nama;
-
-        /**
-         * Fungsi socket io
-         */
-        io.sockets.on('connection', async function(socket) {
-            // connections.push(socket);
-            // console.log("Terhubung: %s sockets connected", connections.length);
-
-            // pada saat awal connect, ambil data dari database
-            // con.connect(async function(err) {
-                // if (err) throw err;
-                // console.log("session username: " + username);
-                let respon = await init(username);
-                // console.log(respon);
-
-                // lempar data ke client
-                io.sockets.emit('initial-data', respon);
-            // });
-
-            // bila disconnect
-            // socket.on('disconnect', function(data) {
-                // connections.splice(connections.indexOf(socket), 1);
-                // console.log("Terputus: %s sockets connected", connections.length);
-            // })
-
-            // on vote
-            socket.on('sdvote', function(data, fn) {
-                // console.log("data masuk..");
-                // masukkan data ke database
-                // con.connect(function(err) {
-                    // cek dulu apakah user sudah vote
-                    con.query("SELECT COUNT(*) AS checkvt FROM vote_transaction WHERE username = ?", [username], function (err, result, fields){
-                        // console.log(result);
-                        if (result[0].checkvt == 0) {
-                            con.query("UPDATE vote SET jumlah = jumlah + 1 WHERE no_paslon = ?", [data.vote], function (err, result) {
-                                // console.log("Melakukan proses pemilihan (50%)...");
-
-                                con.query("INSERT INTO vote_transaction VALUES (?, ?, ?, now())", [username, data.vote, data.masukansaran], function (err, result) {
-                                    // console.log("Melakukan proses pemilihan (100%)...");
-                                    // console.log("Hasil insert vote transaction : ");
-                                    // console.log(result);
-
-                                    data.nama = nama;
-                                    data.tglVoted = getTanggal();
-                                    // console.log(data);
-                                    // broadcast ke semua client
-                                    io.sockets.emit('new-record', data);
-                                });
-                            });
-    
-                        }
-                    });
-                // });
-
-                fn(true);
-            });
-        });
-
         res.sendFile(__dirname + '/index.html');
 	} else {
         res.sendFile(__dirname + '/login.html');
 	}
+});
+
+/**
+ * Fungsi socket io
+ */
+io.sockets.on('connection', function(socket) {
+    var req = socket.request;
+    let username = req.session.username;
+    let nama = req.session.nama;
+
+    console.log("Session username: ");
+    console.log(username);
+    console.log("Session nama: ");
+    console.log(nama);
+
+    connections.push(socket);
+    console.log("Terhubung: %s sockets connected", connections.length);
+
+    // pada saat awal connect, ambil data dari database
+    con.connect(async function(err) {
+        // if (err) throw err;
+        // console.log("session username: " + username);
+        let respon = await init(username);
+        // console.log(respon);
+
+        // lempar data ke client
+        io.sockets.emit('initial-data', respon);
+    });
+
+    // bila disconnect
+    socket.on('disconnect', function(data) {
+        connections.splice(connections.indexOf(socket), 1);
+        console.log("Terputus: %s sockets connected", connections.length);
+    })
+
+    // on vote
+    socket.on('sdvote', function(data, fn) {
+        console.log("data masuk..");
+        // masukkan data ke database
+        // con.connect(function(err) {
+            // cek dulu apakah user sudah vote
+            con.query("SELECT COUNT(*) AS checkvt FROM vote_transaction WHERE username = ?", [username], function (err, result, fields){
+                // console.log(result);
+                if (result[0].checkvt < 1) {
+                    con.query("UPDATE vote SET jumlah = jumlah + 1 WHERE no_paslon = ?", [data.vote], function (err, result) {
+                        console.log("Melakukan proses pemilihan (50%)...");
+                        console.log("data username: ");
+                        console.log(username);
+
+                        con.query("INSERT INTO vote_transaction VALUES (?, ?, ?, now())", [username, data.vote, data.masukansaran], function (err, result) {
+                            // console.log("Melakukan proses pemilihan (100%)...");
+                            // console.log("Hasil insert vote transaction : ");
+                            // console.log(result);
+
+                            data.nama = nama;
+                            data.tglVoted = getTanggal();
+                            // console.log(data);
+                            // broadcast ke semua client
+                            io.sockets.emit('new-record', data);
+                        });
+                    });
+                }
+            });
+        // });
+
+        fn(true);
+    });
 });
 
 app.get('/error', function(request, response) {
