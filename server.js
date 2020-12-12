@@ -42,6 +42,14 @@ app.get('/', function(req, res) {
 	}
 });
 
+app.get('/vote', function(req, res) {
+    if (req.session.loggedin) {
+        res.sendFile(__dirname + '/vote.html');
+	} else {
+        res.sendFile(__dirname + '/login.html');
+	}
+});
+
 /**
  * Fungsi socket io
  */
@@ -77,7 +85,7 @@ io.sockets.on('connection', function(socket) {
 
     // on vote
     socket.on('sdvote', function(data, fn) {
-        console.log("data masuk..");
+        // console.log("data masuk..");
         // masukkan data ke database
         // con.connect(function(err) {
             // cek dulu apakah user sudah vote
@@ -85,9 +93,9 @@ io.sockets.on('connection', function(socket) {
                 // console.log(result);
                 if (result[0].checkvt < 1) {
                     con.query("UPDATE vote SET jumlah = jumlah + 1 WHERE no_paslon = ?", [data.vote], function (err, result) {
-                        console.log("Melakukan proses pemilihan (50%)...");
-                        console.log("data username: ");
-                        console.log(username);
+                        // console.log("Melakukan proses pemilihan (50%)...");
+                        // console.log("data username: ");
+                        // console.log(username);
 
                         con.query("INSERT INTO vote_transaction VALUES (?, ?, ?, now())", [username, data.vote, data.masukansaran], function (err, result) {
                             // console.log("Melakukan proses pemilihan (100%)...");
@@ -98,7 +106,11 @@ io.sockets.on('connection', function(socket) {
                             data.tglVoted = getTanggal();
                             // console.log(data);
                             // broadcast ke semua client
-                            io.sockets.emit('new-record', data);
+                            con.query("SELECT * FROM vote", function (err, result, fields) {
+                                data.data_vote = result;
+                                // console.log(data.data_vote);
+                                io.sockets.emit('new-record', data);
+                            });
                         });
                     });
                 }
@@ -255,12 +267,3 @@ app.post('/auth', function(request, response) {
         response.end();
 	}
 });
-
-
-/**
- * Task yg belum:
- * 1. Handle nilai total anggota sudah vote (on load & on listen data)
- * 2. Handle nilai total anggota belum vote (on load & on listen data)
- * 3. List masukan dan saran dibuatkan live (on load & on listen data)
- * 4. Logout
- */

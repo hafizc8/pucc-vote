@@ -38,7 +38,7 @@
                         <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Bagan</a>
+                        <a class="nav-link" href="/vote">Vote</a>
                     </li>
                 </ul>
                 <a href="/logout" class="text-white">Logout</a>
@@ -61,37 +61,14 @@
                         <h4 class="alert-heading">Selamat Datang, !</h4>
                         <p>Website PUCC Vote ini menampilkan data secara realtime..</p>
                         <hr>
-                        <p class="mb-0">Silahkan tekan tombol "Vote" disalah satu kandidat untuk memberikan voting.</p>
+                        <p class="mb-0">Silahkan pergi ke halaman "Vote" untuk memberikan voting.</p>
                     </div>
                 </div>
             </div>
-            <div class="row mb-4">
-                <div class="col">
-                    <div class="card mb-3" style="height: 100%;">
-                        <h5 class="card-header bg-dark text-white">Kandidat 1</h5>
-                        <img src="/image/paslon1.jpg" class="img-fluid card-img-top">
-                        <div class="card-body">
-                            <p class="text-center">Jumlah Suara</p>
-                            <h1 id="suara-1" class="text-center">0</h1>
-                            <p class="card-text">No Name ( Ketua Umum) <br /> No Name ( Wakil Ketua Umum) </p>
-                            <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#visiMisi1">Visi & Misi</button>
-                            <button type="button" class="btn btn-success btnvote" onclick="changeAttributeVote(1)" data-toggle="modal" data-target="#voteModal">Vote</button>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="col">
-                    <div class="card mb-3" style="height: 100%;">
-                        <h5 class="card-header bg-dark text-white">Kandidat 2</h5>
-                        <img src="/image/paslon2.jpg" class="img-fluid card-img-top">
-                        <div class="card-body">
-                            <p class="text-center">Jumlah Suara</p>
-                            <h1 id="suara-2" class="text-center">0</h1>
-                            <p class="card-text">No Name ( Ketua Umum) <br /> No Name ( Wakil Ketua Umum) </p>
-                            <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#visiMisi2">Visi & Misi</button>
-                            <button type="button" class="btn btn-success btnvote" onclick="changeAttributeVote(2)" data-toggle="modal" data-target="#voteModal">Vote</button>
-                        </div>
-                    </div>
+            <div class="row">
+                <div class="col-12 p-5">
+                    <canvas id="myChart" height="90%"></canvas>
                 </div>
             </div>
 
@@ -135,7 +112,6 @@
                     </div>
                 </div>
             </div>
-            
         </div>
     <!-- </main> -->
 
@@ -171,66 +147,6 @@
         </div>
     </div>
 
-    <!-- Modal Visi Misi 1 -->
-    <div class="modal fade" id="visiMisi1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="exampleModalLabel">Visi Misi Kandidat 1</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Visi
-                    <ul>
-                        <li>1. Memajukan rakyat indonesia..</li>
-                        <li>2. Memajukan rakyat indonesia..</li>
-                    </ul>
-
-                    Misi
-                    <ul>
-                        <li>1. Memajukan rakyat indonesia..</li>
-                        <li>2. Memajukan rakyat indonesia..</li>
-                    </ul>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Visi Misi 2 -->
-    <div class="modal fade" id="visiMisi2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="exampleModalLabel">Visi Misi Kandidat 2</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Visi
-                    <ul>
-                        <li>1. Memajukan rakyat indonesia..</li>
-                        <li>2. Memajukan rakyat indonesia..</li>
-                    </ul>
-
-                    Misi
-                    <ul>
-                        <li>1. Memajukan rakyat indonesia..</li>
-                        <li>2. Memajukan rakyat indonesia..</li>
-                    </ul>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <footer>
         <a href="#" class="list-group-item list-group-item-action list-group-item-dark">&copy; PUCC - DIV. PROGRAMMING @2020</a>
     </footer>
@@ -238,46 +154,27 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
     <script src="/js/script.js"></script>
 
     <script>
         var socket = io.connect();
 
-        // event button vote
-        function changeAttributeVote(number) {
-            $('#send').attr('data-vote', number);
-            $('#notifikasii').text("Anda akan memilih pasangan calon nomor " + number +" ..");
-        }
-
-        // send to server
-        $('#send').on('click', function() {
-            let data = {
-                vote: $('#send').data('vote'),
-                masukansaran: $('textarea#masukandansaran').val()
-            };
-
-            socket.emit('sdvote', data, function(result) {
-                console.log(result);
-                if (result) {
-                    toastr.success('Anda berhasil melakukan vote!');
-                } else {
-                    toastr.error('Ups, ada kesalahan saat melakukan vote!');
-                }
-            });
-
-            $('.btnvote').attr('disabled', true);
-            $('#voteModal').modal('hide');
-        });
+        var ctx = document.getElementById('myChart').getContext('2d');
 
         // terima brodcast dri client
         socket.on('new-record', function (data) {
-            // console.log("data baru : " + data);
+            // console.log("data baru : ");
+            // console.log(data);
 
-            let currentSuara = parseInt($('#suara-'+data.vote).text());
-            // console.log("data current: " + currentSuara);
+            var labels = [];
+            var datachart = [];
+            $.each(data.data_vote, function (i, item) {
+                labels.push('Kandidat '+item.no_paslon);
+                datachart.push(item.jumlah);
+            });
 
             toastr.info('Seseorang baru saja melakukan vote..!');
-            $('#suara-'+data.vote).text(currentSuara + 1);
 
             // update statistik
             let totalAnggota = parseInt($('#total_anggota').text());
@@ -296,12 +193,35 @@
                 </a>
             `;
             $('#masukanSaranPanel').append(html);
+
+            var myChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: '# of Votes',
+                        data: datachart,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+            });
         });
 
         // listen initial data dari server
         socket.on('initial-data', function (data) {
+            var labels = [];
+            var datachart = [];
             $.each(data.data_vote, function (i, item) {
-                $('#suara-' + item.no_paslon).text(item.jumlah);
+                labels.push('Kandidat '+item.no_paslon);
+                datachart.push(item.jumlah);
             });
 
             $('#total_anggota').text(data.stat_anggota[0].count);
@@ -324,11 +244,27 @@
                 `;
             });
             $('#masukanSaranPanel').append(html);
+            
+            var myChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: '# of Votes',
+                        data: datachart,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+            });
         });
-
-        $('#voteModal').on('shown.bs.modal', function () {
-            $('#masukandansaran').trigger('focus');
-        })
     </script>
 </body>
 
