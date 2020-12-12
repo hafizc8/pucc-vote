@@ -33,23 +33,6 @@ console.log("Server is running..");
 
 process.setMaxListeners(0);
 
-// routing index
-app.get('/', function(req, res) {
-    if (req.session.loggedin) {
-        res.sendFile(__dirname + '/index.html');
-	} else {
-        res.sendFile(__dirname + '/login.html');
-	}
-});
-
-app.get('/vote', function(req, res) {
-    if (req.session.loggedin) {
-        res.sendFile(__dirname + '/vote.html');
-	} else {
-        res.sendFile(__dirname + '/login.html');
-	}
-});
-
 /**
  * Fungsi socket io
  */
@@ -58,13 +41,12 @@ io.sockets.on('connection', function(socket) {
     let username = req.session.username;
     let nama = req.session.nama;
 
-    console.log("Session username: ");
-    console.log(username);
-    console.log("Session nama: ");
-    console.log(nama);
-
+    console.log("===== new connection =====");
+    console.log("Session username: " + username);
+    console.log("Session nama: " + nama);
     connections.push(socket);
     console.log("Terhubung: %s sockets connected", connections.length);
+    console.log("==========================");
 
     // pada saat awal connect, ambil data dari database
     con.connect(async function(err) {
@@ -121,6 +103,37 @@ io.sockets.on('connection', function(socket) {
     });
 });
 
+const init = async(username) => {
+    let resultJson = {};
+    resultJson['data_vote'] = await getDataVote();
+    resultJson['stat_anggota'] = await getStatAnggota();
+    resultJson['anggota_voted'] = await getVoteTransaction();
+    resultJson['has_voted'] = await getHasVoted(username);
+    resultJson['masukan_saran'] = await getMasukandanSaran();
+
+    return resultJson;
+}
+
+// === START ROUTING
+// === START ROUTING
+// === START ROUTING
+// === START ROUTING
+app.get('/', function(req, res) {
+    if (req.session.loggedin) {
+        res.sendFile(__dirname + '/index.html');
+	} else {
+        res.sendFile(__dirname + '/login.html');
+	}
+});
+
+app.get('/vote', function(req, res) {
+    if (req.session.loggedin) {
+        res.sendFile(__dirname + '/vote.html');
+	} else {
+        res.sendFile(__dirname + '/login.html');
+	}
+});
+
 app.get('/error', function(request, response) {
     response.sendFile(__dirname + '/login-failed.html');
     // response.end();
@@ -132,6 +145,56 @@ app.get('/logout', function(request, response) {
     // response.end();
 });
 
+app.post('/auth', function(request, response) {
+	var username = request.body.username;
+	var password = request.body.password;
+	if (username && password) {
+		con.query('SELECT nama,password FROM ms_anggota WHERE email = ? or username = ?', [username, username], function(error, results, fields) {
+			if (results.length > 0) {
+                // verify password
+                const PasswordHash = require('node-phpass').PasswordHash;
+                const len = 8;
+                const portable = true;
+                const phpversion = 7; 
+                const hasher = new PasswordHash(len, portable, phpversion);
+                const checkPass = hasher.CheckPassword(password, results[0].password);
+
+                // console.log(checkPass ? 'PSW OK' : 'PSW INVALID');
+                if (checkPass) {
+                    request.session.loggedin = true;
+                    request.session.username = username;
+                    request.session.nama = results[0].nama;
+                    response.redirect('/');
+                    response.end();
+                } else {
+                    // password salah
+                    // response.send('password salah');
+                    response.redirect('/error');
+                    response.end();
+                }
+			} else {
+                // user tidak ditemukan
+                // response.send('user tidak ada');
+                response.redirect('/error');
+                response.end();
+			}
+		});
+	} else {
+        // response.send('username atau password kosong');
+        response.redirect('/error');
+        response.end();
+	}
+});
+// === END ROUTING
+// === END ROUTING
+// === END ROUTING
+// === END ROUTING
+
+
+// === START FUNCTION
+// === START FUNCTION
+// === START FUNCTION
+// === START FUNCTION
 // fungsi memanggil data vote
 function getDataVote(){
     return new Promise(resolve => {
@@ -215,55 +278,7 @@ function getTanggal() {
     // console.log(tampilWaktu);
     return tampilTanggal+tampilWaktu;
 }
-
-const init = async(username) => {
-    let resultJson = {};
-    resultJson['data_vote'] = await getDataVote();
-    resultJson['stat_anggota'] = await getStatAnggota();
-    resultJson['anggota_voted'] = await getVoteTransaction();
-    resultJson['has_voted'] = await getHasVoted(username);
-    resultJson['masukan_saran'] = await getMasukandanSaran();
-
-    return resultJson;
-}
-
-app.post('/auth', function(request, response) {
-	var username = request.body.username;
-	var password = request.body.password;
-	if (username && password) {
-		con.query('SELECT nama,password FROM ms_anggota WHERE email = ? or username = ?', [username, username], function(error, results, fields) {
-			if (results.length > 0) {
-                // verify password
-                const PasswordHash = require('node-phpass').PasswordHash;
-                const len = 8;
-                const portable = true;
-                const phpversion = 7; 
-                const hasher = new PasswordHash(len, portable, phpversion);
-                const checkPass = hasher.CheckPassword(password, results[0].password);
-
-                // console.log(checkPass ? 'PSW OK' : 'PSW INVALID');
-                if (checkPass) {
-                    request.session.loggedin = true;
-                    request.session.username = username;
-                    request.session.nama = results[0].nama;
-                    response.redirect('/');
-                    response.end();
-                } else {
-                    // password salah
-                    // response.send('password salah');
-                    response.redirect('/error');
-                    response.end();
-                }
-			} else {
-                // user tidak ditemukan
-                // response.send('user tidak ada');
-                response.redirect('/error');
-                response.end();
-			}
-		});
-	} else {
-        // response.send('username atau password kosong');
-        response.redirect('/error');
-        response.end();
-	}
-});
+// === END FUNCTION
+// === END FUNCTION
+// === END FUNCTION
+// === END FUNCTION

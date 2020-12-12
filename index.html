@@ -162,18 +162,9 @@
 
         var ctx = document.getElementById('myChart').getContext('2d');
 
-        // terima brodcast dri client
+        // listen data vote baru dari server
         socket.on('new-record', function (data) {
-            // console.log("data baru : ");
-            // console.log(data);
-
-            var labels = [];
-            var datachart = [];
-            $.each(data.data_vote, function (i, item) {
-                labels.push('Kandidat '+item.no_paslon);
-                datachart.push(item.jumlah);
-            });
-
+            // notifikasi
             toastr.info('Seseorang baru saja melakukan vote..!');
 
             // update statistik
@@ -193,6 +184,14 @@
                 </a>
             `;
             $('#masukanSaranPanel').append(html);
+
+            // parsing data utk chart
+            var labels = [];
+            var datachart = [];
+            $.each(data.data_vote, function (i, item) {
+                labels.push('Kandidat '+item.no_paslon);
+                datachart.push(item.jumlah);
+            });
 
             var myChart = new Chart(ctx, {
                 type: 'pie',
@@ -217,19 +216,12 @@
 
         // listen initial data dari server
         socket.on('initial-data', function (data) {
-            var labels = [];
-            var datachart = [];
-            $.each(data.data_vote, function (i, item) {
-                labels.push('Kandidat '+item.no_paslon);
-                datachart.push(item.jumlah);
-            });
-
+            // update statistik
             $('#total_anggota').text(data.stat_anggota[0].count);
             $('#anggota_voted').text(data.anggota_voted[0].count);
             $('#anggota_not_voted').text(data.stat_anggota[0].count - data.anggota_voted[0].count);
 
-            $('.btnvote').attr('disabled', data.has_voted);
-
+            // update masukan dan saran
             $('#masukanSaranPanel').html('');
             let html = ``;
             $.each(data.masukan_saran, function(i, item) {
@@ -245,6 +237,14 @@
             });
             $('#masukanSaranPanel').append(html);
             
+            // parsing data utk chart
+            var labels = [];
+            var datachart = [];
+            $.each(data.data_vote, function (i, item) {
+                labels.push('Kandidat '+item.no_paslon);
+                datachart.push(item.jumlah);
+            });
+
             var myChart = new Chart(ctx, {
                 type: 'pie',
                 data: {
